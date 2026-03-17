@@ -1,0 +1,45 @@
+# ============================================================
+# autoiter 配置文件
+# 用户在启动实验前填写此文件，agent 根据此文件驱动迭代循环
+# ============================================================
+
+# --- 任务描述 ---
+task: "image classification"          # 任务类型，自由描述
+dataset: "CIFAR-10"                   # 数据集名称
+description: "ResNet on CIFAR-10"     # 一句话描述你的项目
+
+# --- 目标指标 ---
+metric:
+  name: "accuracy"                    # 指标名称，需与评估输出一致
+  direction: "higher_is_better"       # higher_is_better 或 lower_is_better
+  pattern: "^accuracy:"              # 用于 grep 从 run.log 提取指标的正则
+  # 示例:
+  #   accuracy → pattern: "^accuracy:"    direction: higher_is_better
+  #   val_loss → pattern: "^val_loss:"    direction: lower_is_better
+  #   mAP      → pattern: "^mAP:"        direction: higher_is_better
+  #   BLEU     → pattern: "^BLEU:"       direction: higher_is_better
+
+# --- 运行命令 ---
+run_command: "python train.py"        # 训练+评估命令（输出会被重定向到 run.log）
+eval_command: ""                      # 如果评估与训练分离，填写评估命令；为空则跳过
+
+# --- 可编辑文件 ---
+editable_files:
+  - "train.py"                        # agent 可以修改的文件列表
+  # - "model.py"                      # 按需添加更多
+  # - "data.py"
+
+# --- 只读参考文件 ---
+readonly_files:
+  - "evaluate.py"                     # agent 可以阅读但不能修改的文件
+  - "config.yaml"
+  # - "dataset.py"
+
+# --- 约束 ---
+max_experiment_time: 600              # 单次实验最大时长（秒），超时 kill
+max_consecutive_failures: 5           # 连续失败次数上限，触发瓶颈分析
+stagnation_threshold: 3               # 连续无改善次数，触发深度反思
+
+# --- 环境 ---
+python: "python"                      # python 解释器路径，可改为 "uv run python" 等
+venv: ""                              # 虚拟环境路径，为空则使用当前环境

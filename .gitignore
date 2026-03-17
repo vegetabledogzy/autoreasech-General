@@ -1,0 +1,10 @@
+run.log
+results.tsv
+__pycache__/
+*.pyc
+*.pt
+*.pth
+*.ckpt
+checkpoint*/
+wandb/
+.DS_Store
