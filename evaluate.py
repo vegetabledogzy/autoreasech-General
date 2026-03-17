@@ -1,18 +1,18 @@
 """
-autoiter — 通用评估脚本模板
+autoiter — Evaluation script template
 
-这个文件是只读的（除非用户明确允许修改）。
-用户需要根据自己的任务实现 evaluate() 函数。
+This file is read-only (unless the user explicitly allows modification).
+Users should implement the evaluate() function for their own task.
 
-输出格式约定：
-    评估结束后，必须打印一行格式为:
+Output format convention:
+    After evaluation, print one line per metric:
         <metric_name>: <value>
-    例如:
+    e.g.:
         accuracy: 0.9234
         val_loss: 0.3421
         mAP: 0.7856
 
-    这行输出会被 agent 通过 grep 提取，用于判定实验是否改善。
+    The agent extracts this line via grep to determine whether the experiment improved.
 """
 
 import argparse
@@ -23,23 +23,23 @@ import sys
 
 def evaluate(checkpoint_path: str = "checkpoint.pt", data_dir: str = "data") -> dict:
     """
-    评估模型并返回指标字典。
+    Evaluate the model and return a metrics dict.
 
-    用户需要根据自己的任务实现此函数。返回的 dict 中至少包含
-    config.yaml 中 metric.name 对应的 key。
+    Users should implement this for their own task. The returned dict must
+    contain at least the key matching metric.name in config.yaml.
 
     Args:
-        checkpoint_path: 模型 checkpoint 路径
-        data_dir: 数据目录
+        checkpoint_path: Path to model checkpoint
+        data_dir: Data directory
 
     Returns:
-        dict, 例如 {"accuracy": 0.9234, "loss": 0.3421}
+        dict, e.g. {"accuracy": 0.9234, "loss": 0.3421}
     """
     # ============================================================
-    # TODO: 用户在此实现自己的评估逻辑
+    # TODO: Implement your evaluation logic here
     # ============================================================
     #
-    # 示例（伪代码）:
+    # Example (pseudocode):
     #
     # import torch
     # from model import MyModel
@@ -57,19 +57,19 @@ def evaluate(checkpoint_path: str = "checkpoint.pt", data_dir: str = "data") -> 
     #
     # return {"accuracy": correct / total}
     #
-    raise NotImplementedError("请在 evaluate() 中实现你的评估逻辑")
+    raise NotImplementedError("Please implement your evaluation logic in evaluate()")
 
 
 def main():
     parser = argparse.ArgumentParser(description="autoiter evaluate")
-    parser.add_argument("--checkpoint", default="checkpoint.pt", help="模型 checkpoint 路径")
-    parser.add_argument("--data-dir", default="data", help="数据目录")
+    parser.add_argument("--checkpoint", default="checkpoint.pt", help="Model checkpoint path")
+    parser.add_argument("--data-dir", default="data", help="Data directory")
     args = parser.parse_args()
 
     metrics = evaluate(args.checkpoint, args.data_dir)
 
-    # 打印所有指标，每行一个，格式: name: value
-    # agent 会用 grep 提取需要的那一行
+    # Print all metrics, one per line, format: name: value
+    # The agent will grep for the target metric line
     for name, value in metrics.items():
         if isinstance(value, float):
             print(f"{name}: {value:.6f}")

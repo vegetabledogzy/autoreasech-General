@@ -1,8 +1,8 @@
-# autoiter 实验反思记录
+# autoiter — Experiment Reflections
 
-> 这是你的科研笔记本。每次实验前写假设，实验后写分析。
-> agent 会自动维护此文件。用户可以随时阅读了解实验进展。
+> This is your research notebook. Write hypotheses before each experiment, analysis after.
+> The agent maintains this file automatically. Users can read it anytime to check progress.
 
 ---
 
-<!-- agent 会在下方追加实验记录 -->
+<!-- The agent will append experiment entries below -->

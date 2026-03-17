@@ -1,30 +1,30 @@
 """
-autoiter — 训练脚本模板
+autoiter — Training script template
 
-这是 agent 迭代修改的主文件。
-用户先填入自己的基线实现，然后交给 agent 自主优化。
+This is the main file the agent iterates on.
+Fill in your baseline implementation, then let the agent optimize autonomously.
 
-要求：
-    1. 训练结束后，打印指标行，格式: <metric_name>: <value>
-       例如: accuracy: 0.9234
-    2. 指标名称必须与 config.yaml 中 metric.name 一致
-    3. 如果评估逻辑简单，可以直接写在这里（不需要单独的 evaluate.py）
+Requirements:
+    1. Print a metric line after training, format: <metric_name>: <value>
+       e.g.: accuracy: 0.9234
+    2. Metric name must match metric.name in config.yaml
+    3. If evaluation is simple, you can include it here (no need for a separate evaluate.py)
 """
 
 import time
 import sys
 
 # ============================================================
-# TODO: 用户在此实现自己的训练逻辑
+# TODO: Implement your training logic here
 # ============================================================
 #
-# 下面是一个极简的示例框架，展示输出格式约定。
-# 请替换为你的真实训练代码。
+# Below is a minimal example showing the output format convention.
+# Replace with your actual training code.
 #
 
 
 def train():
-    """训练入口。用户替换为真实实现。"""
+    """Training entry point. Replace with your real implementation."""
 
     print("=" * 60)
     print("autoiter — training started")
@@ -33,7 +33,7 @@ def train():
     start_time = time.time()
 
     # ----------------------------------------------------------
-    # 示例：CIFAR-10 分类（伪代码，请替换）
+    # Example: CIFAR-10 classification (pseudocode, replace this)
     # ----------------------------------------------------------
     #
     # import torch
@@ -41,19 +41,19 @@ def train():
     # import torchvision
     # import torchvision.transforms as T
     #
-    # # 数据
+    # # Data
     # transform = T.Compose([T.ToTensor(), T.Normalize((0.5,)*3, (0.5,)*3)])
     # trainset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
     # testset  = torchvision.datasets.CIFAR10(root='./data', train=False, download=True, transform=transform)
     # trainloader = torch.utils.data.DataLoader(trainset, batch_size=128, shuffle=True)
     # testloader  = torch.utils.data.DataLoader(testset,  batch_size=256, shuffle=False)
     #
-    # # 模型
+    # # Model
     # model = torchvision.models.resnet18(num_classes=10).cuda()
     # optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
     # criterion = nn.CrossEntropyLoss()
     #
-    # # 训练
+    # # Train
     # for epoch in range(10):
     #     model.train()
     #     for x, y in trainloader:
@@ -63,7 +63,7 @@ def train():
     #         loss.backward()
     #         optimizer.step()
     #
-    # # 评估
+    # # Evaluate
     # model.eval()
     # correct, total = 0, 0
     # with torch.no_grad():
@@ -72,18 +72,18 @@ def train():
     #         correct += (model(x).argmax(1) == y).sum().item()
     #         total += y.size(0)
     # accuracy = correct / total
-    # val_loss = 0.0  # 如需要可计算
+    # val_loss = 0.0  # compute if needed
     #
     # ----------------------------------------------------------
 
-    # 占位：替换为真实指标
+    # Placeholder: replace with real metrics
     accuracy = 0.0
     val_loss = 0.0
 
     elapsed = time.time() - start_time
 
     # ----------------------------------------------------------
-    # 输出指标（agent 通过 grep 提取，格式不要改）
+    # Print metrics (agent extracts via grep, do not change format)
     # ----------------------------------------------------------
     print("---")
     print(f"accuracy: {accuracy:.6f}")
